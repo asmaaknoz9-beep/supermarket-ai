@@ -1,1 +1,24 @@
-
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>بيت الجملة</title>
+<style>*{box-sizing:border-box;font-family:Tahoma}body{margin:0;background:#f1f5f1}header{background:#14532d;color:#fff;padding:16px;text-align:center;position:sticky;top:0;z-index:3}h1{margin:0;font-size:19px}.s{padding:12px;background:#fff;display:flex;gap:8px;position:sticky;top:58px;z-index:2;box-shadow:0 2px 5px #0001}.s input{flex:1;padding:13px;border-radius:12px;border:1px solid #ccc;font-size:15px}.s button{background:#14532d;color:#fff;border:0;border-radius:12px;padding:0 18px;font-weight:bold;font-size:15px}#list{padding:12px;display:grid;grid-template-columns:1fr 1fr;gap:10px;padding-bottom:100px}.card{background:#fff;border-radius:14px;padding:14px;text-align:center;box-shadow:0 2px 8px #0001}.pr{color:#14532d;font-weight:bold;margin:6px 0;font-size:16px}#ab{display:none;position:fixed;bottom:0;left:0;right:0;background:#fff;padding:18px;border-radius:20px 20px 0 0;box-shadow:0 -4px 25px #0003;z-index:9}#ab input{width:100%;padding:13px;margin:7px 0;border-radius:10px;border:1px solid #ccc;font-size:15px}</style>
+</head>
+<body>
+<header><h1>🏠 بيت الجملة</h1></header>
+<div class="s"><input id="q" placeholder="🔍 بحث..." oninput="r()"><button onclick="ab.style.display='block'">+ إضافة</button></div>
+<div id="list"></div>
+<div id="ab"><b>إضافة صنف جديد</b><input id="n" placeholder="اسم الصنف مثلا: اريال"><input id="p" type="number" placeholder="السعر"><input id="c" placeholder="النوع: منظفات"><div style="display:flex;gap:10px;margin-top:10px"><button style="flex:1;padding:13px;background:#eee;border:0;border-radius:12px" onclick="ab.style.display='none'">إلغاء</button><button style="flex:1;padding:13px;background:#14532d;color:#fff;border:0;border-radius:12px" onclick="sav()">حفظ</button></div></div>
+<script>
+let def=[["اريال 3 كيلو",120,"منظفات"],["برسيل 2.5 ك",110,"منظفات"],["كلوركس 1ل",25,"منظفات"],["بريل",30,"منظفات"],["مناديل فاين",22,"ورقيات"],["شاي العروسة",45,"بقالة"],["سكر",32,"بقالة"],["زيت",65,"بقالة"]];
+let saved=null;try{saved=JSON.parse(localStorage.getItem('b'))}catch(e){}
+let d=(saved&&saved.length>0)?saved:def;
+function r(){let q=document.getElementById('q').value.toLowerCase();let h='';d.forEach((x,i)=>{if(x[0].toLowerCase().includes(q)||x[2].toLowerCase().includes(q)){h+=`<div class=card><b>${x[0]}</b><div class=pr>${x[1]} جنيه</div><div style=font-size:12px;color:#888>${x[2]}</div><button onclick="del(${i})" style=border:0;background:#fee;color:#c00;border-radius:8px;margin-top:8px;padding:5px 12px">حذف</button></div>`}});document.getElementById('list').innerHTML=h;localStorage.setItem('b',JSON.stringify(d))}
+function del(i){if(confirm('تحذفي الصنف؟')){d.splice(i,1);r()}}
+function sav(){let a=n.value.trim();let b=+p.value;let c1=c.value.trim()||'عام';if(!a||!b){alert('اكتبي الاسم والسعر');return}d.unshift([a,b,c1]);n.value='';p.value='';c.value='';ab.style.display='none';r()}
+r()
+</script>
+</body>
+</html>
